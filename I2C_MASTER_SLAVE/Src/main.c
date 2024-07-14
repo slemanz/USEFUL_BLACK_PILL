@@ -27,13 +27,21 @@ int main(void) {
     //I2C_Config();
     //NVIC_Config();
 
+    // blink led to say that config is OKAY
+    LED = 1;
+	delay();
+	LED = 0;
+	delay();
+	 LED = 1;
+	delay();
+	LED = 0;
+
+
+
     while (1)
     {
         // Main loop does nothing as we rely on interrupts
-    	LED = 1;
-    	delay();
-    	LED = 0;
-    	delay();
+
     }
 }
 
@@ -74,8 +82,8 @@ void GPIO_Config(void) {
     GPIOB->AFR[0] |= (0x44 << (6 * 4)); // Set alternate function to I2C1 for PB6 and PB7
 
     // Confifure PA6 as led output
-    GPIOA->MODER &= ~(1 << 11);
-    GPIOA->MODER |=  (1 << 10);
+    GPIOA->MODER &= ~(1 << 16);
+    GPIOA->MODER |=  (1 << 16);
 }
 
 /*

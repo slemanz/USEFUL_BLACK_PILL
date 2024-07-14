@@ -13,8 +13,8 @@
 
 #define RCC_BASE_ADDR 		(0x40023800)
 
-#define GPIOA_BASE_ADDR 	(0x40020400)
-#define GPIOB_BASE_ADDR 	(0x40023800)
+#define GPIOA_BASE_ADDR 	(0x40020000)
+#define GPIOB_BASE_ADDR 	(0x40020400)
 
 
 
@@ -114,7 +114,7 @@ typedef struct{
 }PORTx_pin_t;
 
 #define PORTA_OUT ((PORTx_pin_t*)&GPIOA->ODR)
-#define LED (PORTA_OUT->pin11)
+#define LED (PORTA_OUT->pin8)
 
 
 
