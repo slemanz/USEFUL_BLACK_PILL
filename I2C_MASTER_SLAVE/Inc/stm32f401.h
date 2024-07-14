@@ -16,6 +16,8 @@
 #define GPIOA_BASE_ADDR 	(0x40020000)
 #define GPIOB_BASE_ADDR 	(0x40020400)
 
+#define I2C1_BASE_ADDR		(0x40005400)
+
 
 
 // MEMORY STRUCTS
@@ -74,6 +76,23 @@ typedef struct
 #define GPIOB 	((GPIO_RegDef_t*)GPIOB_BASE_ADDR)
 
 
+typedef struct{
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
+	__vo uint32_t OAR1;
+	__vo uint32_t OAR2;
+	__vo uint32_t DR;
+	__vo uint32_t SR1;
+	__vo uint32_t SR2;
+	__vo uint32_t CCR;
+	__vo uint32_t TRISE;
+	__vo uint32_t FLTR;
+}I2C_RegDef_t;
+
+#define I2C1 	((I2C_RegDef_t*)I2C1_BASE_ADDR)
+
+
+
 
 
 // MACROS
@@ -89,6 +108,15 @@ typedef struct
 #define RCC_AHB1ENR_GPIOAEN (1 << 0)
 #define RCC_AHB1ENR_GPIOBEN (1 << 1)
 #define RCC_APB1ENR_I2C1EN (1 << 21)
+
+#define I2C_CR1_PE 			(1 << 0)
+#define I2C_CR1_ACK			(1 << 10)
+
+#define I2C_CR2_ITEVTEN 	(1 << 9)
+#define I2C_CR2_ITBUFEN		(1 << 10)
+#define I2C_CR2_ITERREN		(1 << 8)
+
+
 
 
 // PIN ABSTRACTION

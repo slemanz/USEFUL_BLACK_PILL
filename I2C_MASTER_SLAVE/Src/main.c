@@ -8,7 +8,7 @@ uint8_t active_command = 0xff;
 
 void Clock_Config(void);
 void GPIO_Config(void);
-//void I2C_Config(void);
+void I2C_Config(void);
 //void NVIC_Config(void);
 
 uint8_t get_len_of_data(void) {
@@ -24,7 +24,7 @@ void delay(void)
 int main(void) {
     Clock_Config();
     GPIO_Config();
-    //I2C_Config();
+    I2C_Config();
     //NVIC_Config();
 
     // blink led to say that config is OKAY
@@ -86,12 +86,13 @@ void GPIO_Config(void) {
     GPIOA->MODER |=  (1 << 16);
 }
 
-/*
+
 void I2C_Config(void) {
     I2C1->CR1 &= ~I2C_CR1_PE; // Disable I2C1
     I2C1->CR2 = 16;           // APB1 clock frequency in MHz (set to 16 MHz)
-    I2C1->OAR1 = I2C_OAR1_OA1EN | (SLAVE_ADDR << 1); // Set slave address and enable it
-    I2C1->CCR = 80;           // Configure clock control (standard mode, 100 kHz)
+    //I2C1->OAR1 = I2C_OAR1_OA1EN | (SLAVE_ADDR << 1); // Set slave address and enable it
+    I2C1->OAR1 = (SLAVE_ADDR << 1); // Set slave address
+    I2C1->CCR = 80;           // Configure clock control (standard mode, 100 kHz), consindering 16MHz system clock
     I2C1->TRISE = 17;         // Configure maximum rise time
 
     // Enable ACK, I2C peripheral, and interrupts
@@ -99,6 +100,8 @@ void I2C_Config(void) {
     I2C1->CR2 |= I2C_CR2_ITEVTEN | I2C_CR2_ITBUFEN | I2C_CR2_ITERREN;
 }
 
+
+/*
 void NVIC_Config(void) {
     NVIC_EnableIRQ(I2C1_EV_IRQn); // Enable I2C1 event interrupt
     NVIC_EnableIRQ(I2C1_ER_IRQn); // Enable I2C1 error interrupt
