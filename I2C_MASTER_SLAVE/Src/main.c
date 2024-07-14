@@ -7,7 +7,7 @@ char name_msg[32] = "Welcome to FastBit EBA\n";
 uint8_t active_command = 0xff;
 
 void Clock_Config(void);
-//void GPIO_Config(void);
+void GPIO_Config(void);
 //void I2C_Config(void);
 //void NVIC_Config(void);
 
@@ -15,17 +15,35 @@ uint8_t get_len_of_data(void) {
     return (uint8_t)strlen(name_msg);
 }
 
+void delay(void)
+{
+	for(uint32_t i = 0; i < 1000000; i++);
+}
+
+
 int main(void) {
     Clock_Config();
-    //GPIO_Config();
+    GPIO_Config();
     //I2C_Config();
     //NVIC_Config();
 
     while (1)
     {
         // Main loop does nothing as we rely on interrupts
+    	LED = 1;
+    	delay();
+    	LED = 0;
+    	delay();
     }
 }
+
+
+
+/*
+ * FUNCTIONS
+ */
+
+
 
 void Clock_Config(void) {
     // Enable HSI (internal high speed clock)
@@ -33,16 +51,17 @@ void Clock_Config(void) {
     while (!(RCC->CR & RCC_CR_HSIRDY)); // Wait for HSI to be ready
 
     // Select HSI as system clock source
-    RCC->CFGR &= ~RCC_CFGR_SW;
-    RCC->CFGR |= RCC_CFGR_SW_HSI;
+    RCC->CFGR &= ~RCC_CFGR_SW; // clear
+    RCC->CFGR |= RCC_CFGR_SW_HSI; // set
     while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI); // Wait till HSI is used as system clock source
 
     // Enable clocks for GPIOB and I2C1
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
     RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
 }
 
-/*
+
 void GPIO_Config(void) {
     // Configure PB6 and PB7 as alternate function I2C1
     GPIOB->MODER &= ~(0xF << (6 * 2)); // Clear mode for PB6 and PB7
@@ -53,8 +72,13 @@ void GPIO_Config(void) {
     GPIOB->PUPDR &= ~(0xF << (6 * 2)); // No pull-up/pull-down for PB6 and PB7
 
     GPIOB->AFR[0] |= (0x44 << (6 * 4)); // Set alternate function to I2C1 for PB6 and PB7
+
+    // Confifure PA6 as led output
+    GPIOA->MODER &= ~(1 << 11);
+    GPIOA->MODER |=  (1 << 10);
 }
 
+/*
 void I2C_Config(void) {
     I2C1->CR1 &= ~I2C_CR1_PE; // Disable I2C1
     I2C1->CR2 = 16;           // APB1 clock frequency in MHz (set to 16 MHz)

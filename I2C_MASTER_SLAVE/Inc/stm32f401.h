@@ -11,7 +11,10 @@
 
 // MEMORY ADDRESSES
 
-#define RCC_BASE_ADDR 	(0x40023800)
+#define RCC_BASE_ADDR 		(0x40023800)
+
+#define GPIOA_BASE_ADDR 	(0x40020400)
+#define GPIOB_BASE_ADDR 	(0x40023800)
 
 
 
@@ -53,15 +56,65 @@ typedef struct
 
 
 
+
+typedef struct
+{
+	__vo uint32_t MODER; /* configure the mode of pin 			address offset: 0x00 */
+	__vo uint32_t OTYPER;
+	__vo uint32_t OSPEEDR;
+	__vo uint32_t PUPDR;
+	__vo uint32_t IDR;
+	__vo uint32_t ODR;
+	__vo uint32_t BSRR;
+	__vo uint32_t LCKR;
+	__vo uint32_t AFR[2];
+}GPIO_RegDef_t;
+
+#define GPIOA 	((GPIO_RegDef_t*)GPIOA_BASE_ADDR)
+#define GPIOB 	((GPIO_RegDef_t*)GPIOB_BASE_ADDR)
+
+
+
+
 // MACROS
 
-#define RCC_CR_HSION 	(1 << 0)
-#define RCC_CR_HSIRDY	(1 << 1)
+#define RCC_CR_HSION 		(1 << 0)
+#define RCC_CR_HSIRDY		(1 << 1)
 
-#define RCC_CFGR_SW		(0x3)
+#define RCC_CFGR_SW			(0x3)
+#define RCC_CFGR_SW_HSI		(0x0)
+#define RCC_CFGR_SWS		(0x3 << 2)
+#define RCC_CFGR_SWS_HSI	(0x0)
+
+#define RCC_AHB1ENR_GPIOAEN (1 << 0)
+#define RCC_AHB1ENR_GPIOBEN (1 << 1)
+#define RCC_APB1ENR_I2C1EN (1 << 21)
 
 
+// PIN ABSTRACTION
 
+typedef struct{
+	__vo uint32_t pin0  		: 1;
+	__vo uint32_t pin1  		: 1;
+	__vo uint32_t pin2  		: 1;
+	__vo uint32_t pin3  		: 1;
+	__vo uint32_t pin4  		: 1;
+	__vo uint32_t pin5  		: 1;
+	__vo uint32_t pin6  		: 1;
+	__vo uint32_t pin7  		: 1;
+	__vo uint32_t pin8  		: 1;
+	__vo uint32_t pin9 	 		: 1;
+	__vo uint32_t pin10  		: 1;
+	__vo uint32_t pin11  		: 1;
+	__vo uint32_t pin12  		: 1;
+	__vo uint32_t pin13  		: 1;
+	__vo uint32_t pin14  		: 1;
+	__vo uint32_t pin15  		: 1;
+	__vo uint32_t reserved  	: 16;
+}PORTx_pin_t;
+
+#define PORTA_OUT ((PORTx_pin_t*)&GPIOA->ODR)
+#define LED (PORTA_OUT->pin11)
 
 
 
