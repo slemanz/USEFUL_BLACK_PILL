@@ -1,0 +1,5 @@
+.meta*
+*.settings*
+*Debug/*
+*.cproject*
+*.project*
