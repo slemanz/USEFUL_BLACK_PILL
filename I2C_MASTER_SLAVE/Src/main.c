@@ -3,13 +3,14 @@
 
 #define SLAVE_ADDR 0x68
 
-char name_msg[32] = "Welcome to FastBit EBA\n";
+char name_msg[32] = "Welcome Man\n";
 uint8_t active_command = 0xff;
 
 void Clock_Config(void);
 void GPIO_Config(void);
 void I2C_Config(void);
-//void NVIC_Config(void);
+void NVIC_EnableIRQ(uint8_t IRQNumber);
+void NVIC_Config(void);
 
 uint8_t get_len_of_data(void) {
     return (uint8_t)strlen(name_msg);
@@ -25,7 +26,7 @@ int main(void) {
     Clock_Config();
     GPIO_Config();
     I2C_Config();
-    //NVIC_Config();
+    NVIC_Config();
 
     // blink led to say that config is OKAY
     LED = 1;
@@ -100,13 +101,33 @@ void I2C_Config(void) {
     I2C1->CR2 |= I2C_CR2_ITEVTEN | I2C_CR2_ITBUFEN | I2C_CR2_ITERREN;
 }
 
+void NVIC_EnableIRQ(uint8_t IRQNumber)
+{
+	if(IRQNumber <= 31)
+	{
+		// program ISER0 register
+		*NVIC_ISER0 |= (1 << IRQNumber);
 
-/*
-void NVIC_Config(void) {
-    NVIC_EnableIRQ(I2C1_EV_IRQn); // Enable I2C1 event interrupt
-    NVIC_EnableIRQ(I2C1_ER_IRQn); // Enable I2C1 error interrupt
+	}else if(IRQNumber > 31 && IRQNumber < 64) // 32 to 63
+	{
+		// program ISER1 register
+		*NVIC_ISER1 |= (1 << (IRQNumber % 32));
+
+	}else if(IRQNumber >= 64 && IRQNumber < 96) // 64 to 95
+	{
+		// program ISER2 register
+		*NVIC_ISER2 |= (1 << (IRQNumber % 64));
+
+	}
 }
 
+void NVIC_Config(void) {
+	// priority will be default
+    NVIC_EnableIRQ(IRQ_NO_I2C1_EV); // Enable I2C1 event interrupt
+    NVIC_EnableIRQ(IRQ_NO_I2C1_ER); // Enable I2C1 error interrupt
+}
+
+/*
 void I2C1_EV_IRQHandler(void) {
     if ((I2C1->SR1 & I2C_SR1_ADDR) == I2C_SR1_ADDR) {
         uint32_t temp = I2C1->SR1;

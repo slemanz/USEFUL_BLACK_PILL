@@ -116,6 +116,13 @@ typedef struct{
 #define I2C_CR2_ITBUFEN		(1 << 10)
 #define I2C_CR2_ITERREN		(1 << 8)
 
+#define NVIC_ISER0 						((__vo uint32_t*)0xE000E100UL)
+#define NVIC_ISER1 						((__vo uint32_t*)0xE000E104UL)
+#define NVIC_ISER2 						((__vo uint32_t*)0xE000E108UL)
+#define NVIC_ISER3 						((__vo uint32_t*)0xE000E10CUL)
+
+#define IRQ_NO_I2C1_EV		31
+#define IRQ_NO_I2C1_ER 		32
 
 
 
