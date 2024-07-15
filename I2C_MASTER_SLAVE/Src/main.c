@@ -34,8 +34,6 @@ int main(void) {
 	LED = 0;
 	delay();
 	 LED = 1;
-	delay();
-	LED = 0;
 
 
 
@@ -127,7 +125,7 @@ void NVIC_Config(void) {
     NVIC_EnableIRQ(IRQ_NO_I2C1_ER); // Enable I2C1 error interrupt
 }
 
-/*
+
 void I2C1_EV_IRQHandler(void) {
     if ((I2C1->SR1 & I2C_SR1_ADDR) == I2C_SR1_ADDR) {
         uint32_t temp = I2C1->SR1;
@@ -140,14 +138,17 @@ void I2C1_EV_IRQHandler(void) {
     }
 
     if ((I2C1->SR1 & I2C_SR1_TXE) == I2C_SR1_TXE) {
-        if (active_command == 0x51) {
+        if (active_command == 0x51)
+        {
             uint8_t len = get_len_of_data();
             I2C1->DR = len;
             active_command = 0xff;
-        } else if (active_command == 0x52) {
+        } else if (active_command == 0x52)
+        {
             static uint8_t index = 0;
             I2C1->DR = name_msg[index++];
-            if (index >= strlen(name_msg)) {
+            if (index >= strlen(name_msg))
+            {
                 index = 0;
                 active_command = 0xff;
             }
@@ -155,7 +156,9 @@ void I2C1_EV_IRQHandler(void) {
     }
 }
 
+
 void I2C1_ER_IRQHandler(void) {
+	/*
     if ((I2C1->SR1 & I2C_SR1_AF) == I2C_SR1_AF) {
         I2C1->SR1 &= ~I2C_SR1_AF; // Clear acknowledge failure flag
     }
@@ -166,6 +169,6 @@ void I2C1_ER_IRQHandler(void) {
 
     if ((I2C1->SR1 & I2C_SR1_BERR) == I2C_SR1_BERR) {
         I2C1->SR1 &= ~I2C_SR1_BERR; // Clear bus error flag
-    }
-}*/
+    }*/
+}
 
