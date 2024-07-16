@@ -115,11 +115,15 @@ typedef struct{
 #define I2C_SR1_ADDR 		(1 << 1)
 #define I2C_SR1_RXNE		(1 << 6)
 #define I2C_SR1_TXE			(1 << 7)
-
+#define I2C_OAR1_OA1EN		(1 << 14)
 
 #define I2C_CR2_ITEVTEN 	(1 << 9)
 #define I2C_CR2_ITBUFEN		(1 << 10)
 #define I2C_CR2_ITERREN		(1 << 8)
+
+#define I2C_SR1_AF			(1 << 10)
+#define I2C_SR1_OVR			(1 << 11)
+#define I2C_SR1_BERR		(1 << 8)
 
 #define NVIC_ISER0 						((__vo uint32_t*)0xE000E100UL)
 #define NVIC_ISER1 						((__vo uint32_t*)0xE000E104UL)

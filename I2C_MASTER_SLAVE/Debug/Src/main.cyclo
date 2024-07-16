@@ -7,4 +7,4 @@
 ../Src/main.c:102:6:NVIC_EnableIRQ	6
 ../Src/main.c:122:6:NVIC_Config	1
 ../Src/main.c:129:6:I2C1_EV_IRQHandler	7
-../Src/main.c:160:6:I2C1_ER_IRQHandler	1
+../Src/main.c:160:6:I2C1_ER_IRQHandler	4

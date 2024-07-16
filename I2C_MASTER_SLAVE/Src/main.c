@@ -89,8 +89,8 @@ void GPIO_Config(void) {
 void I2C_Config(void) {
     I2C1->CR1 &= ~I2C_CR1_PE; // Disable I2C1
     I2C1->CR2 = 16;           // APB1 clock frequency in MHz (set to 16 MHz)
-    //I2C1->OAR1 = I2C_OAR1_OA1EN | (SLAVE_ADDR << 1); // Set slave address and enable it
-    I2C1->OAR1 = (SLAVE_ADDR << 1); // Set slave address
+    I2C1->OAR1 = I2C_OAR1_OA1EN | (SLAVE_ADDR << 1); // Set slave address and enable it
+    //I2C1->OAR1 = (SLAVE_ADDR << 1); // Set slave address
     I2C1->CCR = 80;           // Configure clock control (standard mode, 100 kHz), consindering 16MHz system clock
     I2C1->TRISE = 17;         // Configure maximum rise time
 
@@ -158,10 +158,11 @@ void I2C1_EV_IRQHandler(void) {
 
 
 void I2C1_ER_IRQHandler(void) {
-	/*
+
     if ((I2C1->SR1 & I2C_SR1_AF) == I2C_SR1_AF) {
         I2C1->SR1 &= ~I2C_SR1_AF; // Clear acknowledge failure flag
     }
+
 
     if ((I2C1->SR1 & I2C_SR1_OVR) == I2C_SR1_OVR) {
         I2C1->SR1 &= ~I2C_SR1_OVR; // Clear overrun/underrun flag
@@ -169,6 +170,6 @@ void I2C1_ER_IRQHandler(void) {
 
     if ((I2C1->SR1 & I2C_SR1_BERR) == I2C_SR1_BERR) {
         I2C1->SR1 &= ~I2C_SR1_BERR; // Clear bus error flag
-    }*/
+    }
 }
 
