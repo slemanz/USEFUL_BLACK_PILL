@@ -111,10 +111,12 @@ typedef struct{
 
 #define I2C_CR1_PE 			(1 << 0)
 #define I2C_CR1_ACK			(1 << 10)
+#define I2C_CR1_STOP		(1 << 9)
 
 #define I2C_SR1_ADDR 		(1 << 1)
 #define I2C_SR1_RXNE		(1 << 6)
 #define I2C_SR1_TXE			(1 << 7)
+#define I2C_SR1_STOPF		(1 << 4)
 #define I2C_OAR1_OA1EN		(1 << 14)
 
 #define I2C_CR2_ITEVTEN 	(1 << 9)

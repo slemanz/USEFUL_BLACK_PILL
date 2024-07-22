@@ -30,10 +30,7 @@ int main(void) {
 
     // blink led to say that config is OKAY
     LED = 1;
-	delay();
-	LED = 0;
-	delay();
-	 LED = 1;
+
 
 
 
@@ -95,8 +92,8 @@ void I2C_Config(void) {
     I2C1->TRISE = 17;         // Configure maximum rise time
 
     // Enable ACK, I2C peripheral, and interrupts
-    I2C1->CR1 |= I2C_CR1_ACK | I2C_CR1_PE;
     I2C1->CR2 |= I2C_CR2_ITEVTEN | I2C_CR2_ITBUFEN | I2C_CR2_ITERREN;
+    I2C1->CR1 |= (I2C_CR1_ACK | I2C_CR1_PE);
 }
 
 void NVIC_EnableIRQ(uint8_t IRQNumber)
@@ -154,6 +151,16 @@ void I2C1_EV_IRQHandler(void) {
             }
         }
     }
+
+    // Handle STOP condition (optional but recommended)
+	if (I2C1->SR1 & I2C_SR1_STOPF){
+		(void)I2C1->SR1; // Just read SR1 to clear the STOPF flag
+		I2C1->CR1 |=  I2C_CR1_STOP; // release SDA and SCL lines
+
+		//active_command = 0;  // Reset command/state
+	}
+
+
 }
 
 
