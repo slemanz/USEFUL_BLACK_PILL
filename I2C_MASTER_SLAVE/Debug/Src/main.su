@@ -7,4 +7,4 @@
 ../Src/main.c:99:6:NVIC_EnableIRQ	16	static
 ../Src/main.c:119:6:NVIC_Config	8	static
 ../Src/main.c:126:6:I2C1_EV_IRQHandler	24	static
-../Src/main.c:167:6:I2C1_ER_IRQHandler	4	static
+../Src/main.c:169:6:I2C1_ER_IRQHandler	4	static

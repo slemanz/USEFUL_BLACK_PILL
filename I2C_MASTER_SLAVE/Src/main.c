@@ -130,9 +130,7 @@ void I2C1_EV_IRQHandler(void) {
         (void)temp;      // Prevent unused variable warning
     }
 
-    if ((I2C1->SR1 & I2C_SR1_RXNE) == I2C_SR1_RXNE) {
-        active_command = I2C1->DR;
-    }
+
 
     if ((I2C1->SR1 & I2C_SR1_TXE) == I2C_SR1_TXE) {
         if (active_command == 0x51)
@@ -152,10 +150,14 @@ void I2C1_EV_IRQHandler(void) {
         }
     }
 
-    // Handle STOP condition (optional but recommended)
+    if ((I2C1->SR1 & I2C_SR1_RXNE) == I2C_SR1_RXNE) {
+            active_command = I2C1->DR;
+    }
+
+    // Handle STOP condition
 	if (I2C1->SR1 & I2C_SR1_STOPF){
 		(void)I2C1->SR1; // Just read SR1 to clear the STOPF flag
-		I2C1->CR1 |=  I2C_CR1_STOP; // release SDA and SCL lines
+		I2C1->CR1 |= 0x0000;
 
 		//active_command = 0;  // Reset command/state
 	}
