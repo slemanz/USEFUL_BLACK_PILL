@@ -13,7 +13,7 @@
 
 #define RCC_BASE          0x40023800
 
-#define UART2_BASE        0x40004400
+#define USART2_BASE       0x40004400
 #define GPIOA_BASE        0x40020000
 
 
@@ -89,10 +89,19 @@ typedef struct
 
 
 
-#define I2C1 	((I2C_RegDef_t*)I2C1_BASE_ADDR)
+typedef struct
+{
+	__vo uint32_t SR; /* configure the mode of pin 			address offset: 0x00 */
+	__vo uint32_t DR;
+	__vo uint32_t BRR;
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
+	__vo uint32_t CR3;
+	__vo uint32_t GTPR;
+}USART_RegDef_t;
 
 
-
+#define UART2 	((USART_RegDef_t*)USART2_BASE)
 
 
 // MACROS
