@@ -2,13 +2,11 @@
 
 void uart2_init(void)
 {
-	 RCC_APB1ENR |= (1 << 17); // Enable UART2 clock
-
 	 // Configure UART2
-	 UART2->BRR = UART2_BRR_VALUE; // Set baud rate
-	 UART2->CR1 |= (1 << 2); // Enable TX
-	 UART2->CR1 |= (1 << 3); // Enable RX
-	 UART2->CR1 |= (1 << 13); // Enable USART
+	 UART2->BRR = (UART2_BRR_VALUE << 4); // Set baud rate
+	 UART2->CR1 |= USART_CR1_TE; // Enable TX
+	 UART2->CR1 |= USART_CR1_RE; // Enable RX
+	 UART2->CR1 |= USART_CR1_UE; // Enable USART
 
 	 // Enable RXNE interrupt (optional, if you handle interrupts)
 	 //UART2_CR1 |= (1 << 5); // RXNE interrupt enable
@@ -16,15 +14,15 @@ void uart2_init(void)
 
 void uart2_send_char(char c)
 {
-    while (!(UART2->SR & (1 << 7))); // Wait until TXE (Transmit Data Register Empty)
+    while (!(UART2->SR & USART_SR_TXE)); // Wait until TXE (Transmit Data Register Empty)
     UART2->DR = c; // Transmit character
 }
 
-/*char uart2_receive_char(void)
+char uart2_receive_char(void)
 {
-    //while (!(UART2_ISR & (1 << 5))); // Wait until RXNE (Receive Data Register Not Empty)
-    //return (char)(UART2_RDR & 0xFF); // Read received character
-}*/
+    while (!(UART2->SR & USART_SR_RXNE)); // Wait until RXNE (Receive Data Register Not Empty)
+    return (char)(UART2->DR & 0xFF); // Read received character
+}
 
 void uart2_send_string(const char *str)
 {

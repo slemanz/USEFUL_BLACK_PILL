@@ -114,9 +114,24 @@ typedef struct
 #define RCC_CFGR_SWS		(0x3 << 2)
 #define RCC_CFGR_SWS_HSI	(0x0)
 
-#define RCC_AHB1ENR_GPIOAEN (1 << 0)
-#define RCC_AHB1ENR_GPIOBEN (1 << 1)
-#define RCC_APB1ENR_I2C1EN (1 << 21)
+#define RCC_AHB1ENR_GPIOAEN 	(1 << 0)
+#define RCC_AHB1ENR_GPIOBEN 	(1 << 1)
+#define RCC_APB1ENR_I2C1EN 		(1 << 21)
+#define RCC_APB1ENR_USART2EN 	(1 << 17)
+
+/*
+ * USART DEFINITIONS
+ */
+
+
+#define USART_CR1_TE			(1 << 3)
+#define USART_CR1_RE			(1 << 2)
+#define USART_CR1_UE			(1 << 13)
+
+#define USART_SR_TXE			(1 << 7)
+#define USART_SR_RXNE			(1 << 5)
+
+
 
 
 

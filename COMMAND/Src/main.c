@@ -5,8 +5,10 @@ void GPIO_Config(void);
 
 void delay(void)
 {
-	for(uint32_t i = 0; i < 1000000; i++);
+	for(uint32_t i = 0; i < 3000000; i++);
 }
+
+char c;
 
 
 int main(void) {
@@ -14,13 +16,14 @@ int main(void) {
     GPIO_Config();
     uart2_init();
 
-
-
+    uart2_send_string("Ola mundo!\r\n");
 
     while (1)
     {
-    	uart2_send_char('a');
-    	delay();
+
+    	c = uart2_receive_char();
+    	uart2_send_char(c);
+
 
     }
 }
@@ -45,7 +48,7 @@ void Clock_Config(void) {
 
     // Enable clocks for GPIOB and I2C1
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-    //RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+    RCC_APB1ENR |= (RCC_APB1ENR_USART2EN); // Enable UART2 clock
 }
 
 
