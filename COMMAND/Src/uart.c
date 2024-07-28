@@ -5,13 +5,13 @@ void uart2_init(void)
 	 RCC_APB1ENR |= (1 << 17); // Enable UART2 clock
 
 	 // Configure UART2
-	     UART2_BRR = UART2_BRR_VALUE; // Set baud rate
-	     UART2_CR1 |= (1 << 2); // Enable TX
-	     UART2_CR1 |= (1 << 3); // Enable RX
-	     UART2_CR1 |= (1 << 0); // Enable USART
+	 UART2_BRR = UART2_BRR_VALUE; // Set baud rate
+	 UART2_CR1 |= (1 << 2); // Enable TX
+	 UART2_CR1 |= (1 << 3); // Enable RX
+	 UART2_CR1 |= (1 << 0); // Enable USART
 
-	     // Enable RXNE interrupt (optional, if you handle interrupts)
-	     //UART2_CR1 |= (1 << 5); // RXNE interrupt enable
+	 // Enable RXNE interrupt (optional, if you handle interrupts)
+	 //UART2_CR1 |= (1 << 5); // RXNE interrupt enable
 }
 
 void uart2_send_char(char c)

@@ -1,9 +1,5 @@
 #include "stm32f401.h"
 
-
-#define SLAVE_ADDR 0x68
-uint8_t active_command = 0xff;
-
 void Clock_Config(void);
 void GPIO_Config(void);
 
@@ -16,13 +12,15 @@ void delay(void)
 int main(void) {
     Clock_Config();
     GPIO_Config();
+    uart2_init();
 
 
 
 
     while (1)
     {
-        // Main loop does nothing as we rely on interrupts
+    	uart2_send_char('a');
+    	delay();
 
     }
 }
@@ -47,14 +45,11 @@ void Clock_Config(void) {
 
     // Enable clocks for GPIOB and I2C1
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
-    RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
+    //RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
 }
 
 
 void GPIO_Config(void) {
-	// Enable GPIOA clock (where UART2 is located)
-	RCC_AHB1ENR |= (1 << 0); // Enable GPIOA clock
 
 	 // Configure PA2 as Alternate Function mode for UART2 TX
 	// Configure PA3 as Alternate Function mode for UART2 RX

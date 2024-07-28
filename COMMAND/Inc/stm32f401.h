@@ -12,6 +12,7 @@
 // MEMORY ADDRESSES
 
 #define RCC_BASE          0x40023800
+
 #define UART2_BASE        0x40004400
 #define GPIOA_BASE        0x40020000
 
@@ -87,18 +88,6 @@ typedef struct
 #define GPIOB 	((GPIO_RegDef_t*)GPIOB_BASE_ADDR)
 
 
-typedef struct{
-	__vo uint32_t CR1;
-	__vo uint32_t CR2;
-	__vo uint32_t OAR1;
-	__vo uint32_t OAR2;
-	__vo uint32_t DR;
-	__vo uint32_t SR1;
-	__vo uint32_t SR2;
-	__vo uint32_t CCR;
-	__vo uint32_t TRISE;
-	__vo uint32_t FLTR;
-}I2C_RegDef_t;
 
 #define I2C1 	((I2C_RegDef_t*)I2C1_BASE_ADDR)
 
@@ -120,23 +109,7 @@ typedef struct{
 #define RCC_AHB1ENR_GPIOBEN (1 << 1)
 #define RCC_APB1ENR_I2C1EN (1 << 21)
 
-#define I2C_CR1_PE 			(1 << 0)
-#define I2C_CR1_ACK			(1 << 10)
-#define I2C_CR1_STOP		(1 << 9)
 
-#define I2C_SR1_ADDR 		(1 << 1)
-#define I2C_SR1_RXNE		(1 << 6)
-#define I2C_SR1_TXE			(1 << 7)
-#define I2C_SR1_STOPF		(1 << 4)
-#define I2C_OAR1_OA1EN		(1 << 14)
-
-#define I2C_CR2_ITEVTEN 	(1 << 9)
-#define I2C_CR2_ITBUFEN		(1 << 10)
-#define I2C_CR2_ITERREN		(1 << 8)
-
-#define I2C_SR1_AF			(1 << 10)
-#define I2C_SR1_OVR			(1 << 11)
-#define I2C_SR1_BERR		(1 << 8)
 
 #define NVIC_ISER0 						((__vo uint32_t*)0xE000E100UL)
 #define NVIC_ISER1 						((__vo uint32_t*)0xE000E104UL)
