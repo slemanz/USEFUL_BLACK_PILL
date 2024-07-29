@@ -16,15 +16,11 @@ int main(void) {
     GPIO_Config();
     uart2_init();
 
-    uart2_send_string("Ola mundo!\r\n");
+    uart2_send_string("Inicializado!\r\n");
 
     while (1)
     {
-
-    	c = uart2_receive_char();
-    	uart2_send_char(c);
-
-
+    	ProcessCommands();
     }
 }
 

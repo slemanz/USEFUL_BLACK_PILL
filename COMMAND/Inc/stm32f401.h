@@ -177,6 +177,7 @@ typedef struct{
  */
 
 #include "uart.h"
+#include "command.h"
 
 
 #endif /* STM32F401_H_ */
