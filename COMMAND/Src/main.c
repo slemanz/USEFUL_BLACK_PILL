@@ -16,7 +16,7 @@ int main(void) {
     GPIO_Config();
     uart2_init();
 
-    uart2_send_string("Inicializado!\r\n");
+    printf("STM32 Inicializado!\r\n");
 
     while (1)
     {

@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdio.h>
 
 #define __vo volatile
 #define __weak __attribute__((weak))

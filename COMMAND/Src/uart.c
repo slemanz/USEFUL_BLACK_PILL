@@ -12,10 +12,10 @@ void uart2_init(void)
 	 //UART2_CR1 |= (1 << 5); // RXNE interrupt enable
 }
 
-void uart2_send_char(char c)
+void uart2_send_char(int c)
 {
     while (!(UART2->SR & USART_SR_TXE)); // Wait until TXE (Transmit Data Register Empty)
-    UART2->DR = c; // Transmit character
+    UART2->DR = (c & 0xFF); // Transmit character
 }
 
 char uart2_receive_char(void)
@@ -28,6 +28,12 @@ void uart2_send_string(const char *str)
 {
     while (*str)
     {
-        uart2_send_char(*str++);
+        uart2_send_char((int)*str++);
     }
+}
+
+int __io_putchar(int ch)
+{
+	uart2_send_char(ch);
+	return ch;
 }

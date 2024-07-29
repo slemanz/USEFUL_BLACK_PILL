@@ -41,21 +41,18 @@ void ProcessCommands(void)
 void TurnOnLED(void)
 {
     // Your code to turn on LED here
-	uart2_send_string("LED turned ON\n");
+	printf("LED turned ON\n");
 }
 
 void TurnOffLED(void) {
     // Your code to turn off LED here
-	uart2_send_string("LED turned OFF\n");
+	printf("LED turned OFF\n");
 }
 
 void Help(void) {
-	uart2_send_string("===================================\n");
+	printf("===================================\n");
     for (int i = 0; i < COMMAND_COUNT; i++) {
-    	uart2_send_string(commands[i].name);
-    	uart2_send_string(": ");
-    	uart2_send_string(commands[i].help);
-    	uart2_send_string("\n");
+    	printf("%s: %s\n", commands[i].name, commands[i].help);
     }
-    uart2_send_string("===================================\n");
+    printf("===================================\n");
 }
