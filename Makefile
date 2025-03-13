@@ -1,17 +1,21 @@
 CC=arm-none-eabi-gcc
 MACH=cortex-m4
 FLOAT=soft
-LINKER_SCRIPT=STM32F401xC.ld
+
+LINKER_APP=STM32F401_APP.ld
+
 MAP_FILE=Build/final.map
 FINAL_FILE=Build/final.elf
 FLASH_FILE=Build/flash.bin
 
-CFLAGS= -c -mcpu=$(MACH) -mthumb -mfloat-abi=$(FLOAT) -std=gnu11 -Wall -O0 -ggdb
-LDFLAGS =  -mcpu=$(MACH) -mthumb -mfloat-abi=$(FLOAT) --specs=nano.specs -T $(LINKER_SCRIPT) -Wl,-Map=$(MAP_FILE) -ggdb -u _printf_float
+CFLAGS= -c -mcpu=$(MACH) -mthumb -mfloat-abi=$(FLOAT) -std=gnu11 -Wall -O0
+#APP_LDFLAGS =  -mcpu=$(MACH) -mthumb -mfloat-abi=$(FLOAT) --specs=nano.specs -T $(LINKER_APP) -Wl,-Map=$(MAP_FILE) -ggdb -u _printf_float 
+APP_LDFLAGS =  -mcpu=$(MACH) -mthumb -mfloat-abi=$(FLOAT) --specs=nano.specs -T $(LINKER_APP) -Wl,-Map=$(MAP_FILE)
 OBJCOPY=arm-none-eabi-objcopy
 
-###########################################
-#				 INCLUDES
+#############################################
+#				 INCLUDES					#
+#############################################
 
 INCLUDES+= -I Inc/
 INCLUDES+= -I ../drivers/Inc/ 
@@ -20,16 +24,25 @@ INCLUDES+= -I ../drivers/Inc/
 ############################################
 # 				OUTPUT FILES
 
-OBJS		+= Build/main.o
+BLINKY		+= Build/blinky.o
+
 OBJS		+= Build/syscalls.o
 OBJS		+= Build/startup.o
 
-OBJS		+= Build/driver_systick.o
-OBJS		+= Build/driver_gpio.o
-OBJS		+= Build/driver_uart.o
-OBJS		+= Build/system.o
+#OBJS		+= Build/driver_systick.o
+#OBJS		+= Build/driver_gpio.o
+#OBJS		+= Build/driver_uart.o
+#OBJS		+= Build/system.o
+
+
+
+#############################################
+#				RULES						#
+#############################################
 
 all: Build/final.elf
+
+blinky: Build/blinky.elf
 
 Build/%.o: Src/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Src/$(*).c
@@ -37,19 +50,33 @@ Build/%.o: Src/%.c
 Build/%.o: Src/%.S
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Src/$(*).S
 
+Build/%.o: Apps/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/$(*).c
+
+Build/%.o: Apps/blinky/Src/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/blinky/Src/$(*).c
+
 Build/%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o $(*).c
 
 Build/%.o: ../drivers/Src/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o ../drivers/Src/$(*).c
 
+Build/%.o: Apps/blinky/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Src/$(*).c
+
+Build/blinky.elf: $(BLINKY) $(OBJS)
+	$(CC) $(APP_LDFLAGS) -o $@ $^
+	$(CC) $(APP_LDFLAGS) -o Build/flash.elf $^
+	$(OBJCOPY) -O binary $@ Build/flash.bin
+
 Build/final.elf: $(OBJS)
-	$(CC) $(LDFLAGS) -o $@ $^
-	$(OBJCOPY) -O binary Build/final.elf Build/flash.bin
+	$(CC) $(APP_LDFLAGS) -o $@ $^
+	$(OBJCOPY) -O binary Build/flash.elf Build/flash.bin
 
 load:
 	openocd -f interface/jlink.cfg -c "transport select swd" -f target/stm32f4x.cfg -c init -c "reset init" \
-	-c "flash write_image erase Build/final.elf" -c "reset run" -c shutdown
+	-c "flash write_image erase Build/flash.elf" -c "reset run" -c shutdown
 
 debug:
 	openocd -f interface/jlink.cfg -c "transport select swd" -f target/stm32f4x.cfg -c init -c "reset init"

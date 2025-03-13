@@ -3,3 +3,6 @@
 *Debug*
 *.cproject*
 *.project*
+*.o
+*.map
+*.elf
