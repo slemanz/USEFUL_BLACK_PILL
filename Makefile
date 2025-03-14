@@ -29,8 +29,8 @@ BLINKY		+= Build/blinky.o
 OBJS		+= Build/syscalls.o
 OBJS		+= Build/startup.o
 
+DRIVERS		+= Build/driver_gpio.o
 #OBJS		+= Build/driver_systick.o
-#OBJS		+= Build/driver_gpio.o
 #OBJS		+= Build/driver_uart.o
 #OBJS		+= Build/system.o
 
@@ -43,6 +43,8 @@ OBJS		+= Build/startup.o
 all: Build/final.elf
 
 blinky: Build/blinky.elf
+
+command: Build/command.elf
 
 Build/%.o: Src/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Src/$(*).c
@@ -66,6 +68,11 @@ Build/%.o: Apps/blinky/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Src/$(*).c
 
 Build/blinky.elf: $(BLINKY) $(OBJS)
+	$(CC) $(APP_LDFLAGS) -o $@ $^
+	$(CC) $(APP_LDFLAGS) -o Build/flash.elf $^
+	$(OBJCOPY) -O binary $@ Build/flash.bin
+
+Build/command.elf: $(BLINKY) $(OBJS) $(DRIVERS)
 	$(CC) $(APP_LDFLAGS) -o $@ $^
 	$(CC) $(APP_LDFLAGS) -o Build/flash.elf $^
 	$(OBJCOPY) -O binary $@ Build/flash.bin
