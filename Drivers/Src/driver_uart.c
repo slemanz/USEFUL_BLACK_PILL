@@ -31,7 +31,6 @@ void UART_PeripheralControl(UART_RegDef_t *pUARTx, uint8_t EnorDi)
 
 void UART_Init(UART_Handle_t *pUARTHandle)
 {
-    uart2_init_pins();
     UART_PeriClockControl(pUARTHandle->pUSARTx, ENABLE);
 
     uint32_t temp = 0;
@@ -74,7 +73,10 @@ void uart_write(UART_RegDef_t *pUARTx, uint8_t* pTxBuffer, const uint32_t Len)
 {
     for(uint32_t i = 0; i < Len; i++)
 	{
-        while(!USART_GetFlagStatus(pUARTx, UART_FLAG_TXE));
+        while(!UART_GetFlagStatus(pUARTx, UART_FLAG_TXE))
+        {
+            __asm("NOP");
+        }
 		uart_write_byte(pUARTx, pTxBuffer[i]);
 	}
 }
