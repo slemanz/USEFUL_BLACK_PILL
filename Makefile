@@ -31,9 +31,9 @@ COMMAND		+= Build/command.o
 OBJS		+= Build/syscalls.o
 OBJS		+= Build/startup.o
 
+DRIVERS		+= Build/driver_systick.o
 DRIVERS		+= Build/driver_gpio.o
 DRIVERS		+= Build/driver_uart.o
-#OBJS		+= Build/driver_systick.o
 #OBJS		+= Build/system.o
 
 SHARED 		+= Build/cli.o

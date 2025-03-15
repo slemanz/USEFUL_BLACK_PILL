@@ -119,7 +119,7 @@
 
 typedef struct
 {
-	__vo uint32_t MODER; /* configure the mode of pin 			address offset: 0x00 */
+	__vo uint32_t MODER;
 	__vo uint32_t OTYPER;
 	__vo uint32_t OSPEEDR;
 	__vo uint32_t PUPDR;
@@ -181,42 +181,42 @@ typedef struct{
 
 typedef struct
 {
-  __vo uint32_t CTRL;                   /*!< Offset: 0x000 (R/W)  SysTick Control and Status Register */
-  __vo uint32_t LOAD;                   /*!< Offset: 0x004 (R/W)  SysTick Reload Value Register */
-  __vo uint32_t VAL;                    /*!< Offset: 0x008 (R/W)  SysTick Current Value Register */
-  __vo uint32_t CALIB;                  /*!< Offset: 0x00C (R/ )  SysTick Calibration Register */
+  __vo uint32_t CTRL;           /*!< Address Offset: 0x000 - SysTick Control and Status Register */
+  __vo uint32_t LOAD;           /*!< Address Offset: 0x004 - SysTick Reload Value Register */
+  __vo uint32_t VAL;            /*!< Address Offset: 0x008 - SysTick Current Value Register */
+  __vo uint32_t CALIB;          /*!< Address Offset: 0x00C - SysTick Calibration Register */
 }SysTick_RegDef_t;
 
 typedef struct
 {
-	__vo uint32_t CR1;         /*!< TIM control register 1,              Address offset: 0x00 */
-  	__vo uint32_t CR2;         /*!< TIM control register 2,              Address offset: 0x04 */
-	__vo uint32_t SMCR;        /*!< TIM slave mode control register,     Address offset: 0x08 */
-	__vo uint32_t DIER;        /*!< TIM DMA/interrupt enable register,   Address offset: 0x0C */
-	__vo uint32_t SR;          /*!< TIM status register,                 Address offset: 0x10 */
-	__vo uint32_t EGR;         /*!< TIM event generation register,       Address offset: 0x14 */
-	__vo uint32_t CCMR[2];     /*!< TIM capture/compare mode register,   Address offset: 0x18 */
-	__vo uint32_t CCER;        /*!< TIM capture/compare enable register, Address offset: 0x20 */
-	__vo uint32_t CNT;         /*!< TIM counter register,                Address offset: 0x24 */
-	__vo uint32_t PSC;         /*!< TIM prescaler,                       Address offset: 0x28 */
-	__vo uint32_t ARR;         /*!< TIM auto-reload register,            Address offset: 0x2C */
-	__vo uint32_t RCR;         /*!< TIM repetition counter register,     Address offset: 0x30 */
-	__vo uint32_t CCR[4];      /*!< TIM capture/compare register,        Address offset: 0x34 */
-	__vo uint32_t BDTR;        /*!< TIM break and dead-time register,    Address offset: 0x44 */
-	__vo uint32_t DCR;         /*!< TIM DMA control register,            Address offset: 0x48 */
-	__vo uint32_t DMAR;        /*!< TIM DMA address for full transfer,   Address offset: 0x4C */
-	__vo uint32_t OR;          /*!< TIM option register,                 Address offset: 0x50 */
+	__vo uint32_t CR1;          /*!< Address offset: 0x00 */
+  	__vo uint32_t CR2;          /*!< Address offset: 0x04 */
+	__vo uint32_t SMCR;         /*!< Address offset: 0x08 */
+	__vo uint32_t DIER;         /*!< Address offset: 0x0C */
+	__vo uint32_t SR;           /*!< Address offset: 0x10 */
+	__vo uint32_t EGR;          /*!< Address offset: 0x14 */
+	__vo uint32_t CCMR[2];      /*!< Address offset: 0x18 */
+	__vo uint32_t CCER;         /*!< Address offset: 0x20 */
+	__vo uint32_t CNT;          /*!< Address offset: 0x24 */
+	__vo uint32_t PSC;          /*!< Address offset: 0x28 */
+	__vo uint32_t ARR;          /*!< Address offset: 0x2C */
+	__vo uint32_t RCR;          /*!< Address offset: 0x30 */
+	__vo uint32_t CCR[4];       /*!< Address offset: 0x34 */
+	__vo uint32_t BDTR;         /*!< Address offset: 0x44 */
+	__vo uint32_t DCR;          /*!< Address offset: 0x48 */
+	__vo uint32_t DMAR;         /*!< Address offset: 0x4C */
+	__vo uint32_t OR;           /*!< Address offset: 0x50 */
 }TIM_RegDef_t;
 
 typedef struct
 {
-  __vo uint32_t SR;         /*!< USART Status register,                   Address offset: 0x00 */
-  __vo uint32_t DR;         /*!< USART Data register,                     Address offset: 0x04 */
-  __vo uint32_t BRR;        /*!< USART Baud rate register,                Address offset: 0x08 */
-  __vo uint32_t CR1;        /*!< USART Control register 1,                Address offset: 0x0C */
-  __vo uint32_t CR2;        /*!< USART Control register 2,                Address offset: 0x10 */
-  __vo uint32_t CR3;        /*!< USART Control register 3,                Address offset: 0x14 */
-  __vo uint32_t GTPR;       /*!< USART Guard time and prescaler register, Address offset: 0x18 */
+  __vo uint32_t SR;             /*!< Address offset: 0x00 */
+  __vo uint32_t DR;             /*!< Address offset: 0x04 */
+  __vo uint32_t BRR;            /*!< Address offset: 0x08 */
+  __vo uint32_t CR1;            /*!< Address offset: 0x0C */
+  __vo uint32_t CR2;            /*!< Address offset: 0x10 */
+  __vo uint32_t CR3;            /*!< Address offset: 0x14 */
+  __vo uint32_t GTPR;           /*!< Address offset: 0x18 */
 }UART_RegDef_t;
 
 
@@ -388,12 +388,10 @@ typedef struct
 
 #define ENABLE 						1
 #define	DISABLE 					0
-#define _SET						ENABLE
-#define _RESET						DISABLE
-#define GPIO_PIN_SET				_SET
-#define GPIO_PIN_RESET				_RESET
-#define FLAG_SET					_SET
-#define FLAG_RESET					_RESET
+#define GPIO_PIN_SET				ENABLE
+#define GPIO_PIN_RESET				DISABLE
+#define FLAG_SET					ENABLE
+#define FLAG_RESET					DISABLE
 
 
 /*
