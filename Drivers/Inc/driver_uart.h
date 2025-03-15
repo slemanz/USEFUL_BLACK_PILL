@@ -9,8 +9,8 @@
 
 typedef struct
 {
-	uint8_t USART_Mode;
-	uint32_t USART_Baud;
+	uint8_t UART_Mode;
+	uint32_t UART_Baud;
 }UART_Config_t;
 
 /*
@@ -23,45 +23,53 @@ typedef struct{
 }UART_Handle_t;
 
 /*
- *@USART_Mode
+ *@UART_Mode
  *Possible options for USART_Mode
  */
-#define USART_MODE_ONLY_TX		0
-#define USART_MODE_ONLY_RX		1
-#define USART_MODE_TXRX			2
+#define UART_MODE_ONLY_TX		0
+#define UART_MODE_ONLY_RX		1
+#define UART_MODE_TXRX			2
 
 
 /*
- *@USART_Baud
+ *@UART_Baud
  *Possible options for USART_Baud
  */
-#define USART_STD_BAUD_1200			1200
-#define USART_STD_BAUD_2400			2400
-#define USART_STD_BAUD_9600			9600
-#define USART_STD_BAUD_19200		19200
-#define USART_STD_BAUD_38400		38400
-#define USART_STD_BAUD_57600		57600
-#define USART_STD_BAUD_115200		115200
+#define UART_STD_BAUD_1200              1200
+#define UART_STD_BAUD_2400              2400
+#define UART_STD_BAUD_9600              9600
+#define UART_STD_BAUD_19200             19200
+#define UART_STD_BAUD_38400             38400
+#define UART_STD_BAUD_57600             57600
+#define UART_STD_BAUD_115200            115200
 
 /*
- * USART DEFINITIONS
+ * UART DEFINITIONS
  */
 
 
-#define USART_CR1_TE			(3)
-#define USART_CR1_RE			(2)
-#define USART_CR1_UE			(13)
+#define UART_CR1_TE                 (3)
+#define UART_CR1_RE                 (2)
+#define UART_CR1_UE                 (13)
 
-#define USART_SR_TXE            (7)
-#define USART_SR_RXNE           (5)
+#define UART_SR_TXE                 (7)
+#define UART_SR_RXNE                (5)
 
 /*
- * USART flags
+ * UART MASK
  */
 
-#define USART_FLAG_TXE 			( 1 << USART_SR_TXE)
-#define USART_FLAG_RXNE 		( 1 << USART_SR_RXNE)
-#define USART_FLAG_TC 			( 1 << USART_SR_TC)
+#define UART_CR1_TE_MASK            (1 << UART_CR1_TE)
+#define UART_CR1_RE_MASK            (1 << UART_CR1_RE)
+#define UART_CR1_UE_MASK            (1 << UART_CR1_UE)
+
+/*
+ * UART flags
+ */
+
+#define UART_FLAG_TXE               (1 << UART_SR_TXE)
+#define UART_FLAG_RXNE              (1 << UART_SR_RXNE)
+//#define UART_FLAG_TC 			( 1 << UART_SR_TC)
 
 
 /********************************************************************************************
@@ -83,10 +91,13 @@ void UART_DeInit(UART_RegDef_t *pUARTx);
 
 
 /*
- * Data Send and Receive
+ * Data write and Read
  */
-void UART_SendData(UART_Handle_t *pUARTHandle, uint8_t *pTxBuffer, uint32_t Len);
-void UART_ReceiveData(UART_Handle_t *pUARTHandle, uint8_t *pRxBuffer, uint32_t Len);
+void uart_write_byte(UART_RegDef_t *pUARTx, uint8_t data);
+uint8_t uart_read_byte(UART_RegDef_t *pUARTx);
+
+ void uart_write(UART_RegDef_t *pUARTx, uint8_t* pTxBuffer, const uint32_t Len);
+ void uart_read(UART_RegDef_t *pUARTx, uint8_t* pRxBuffer, const uint32_t Len);
 
 /*
  * Interrupt Configuration
