@@ -430,9 +430,9 @@ typedef struct
  * Drivers includes
  */
 
+#include "driver_systick.h"
 #include "driver_gpio.h"
-//#include "driver_uart.h"
-//#include "driver_systick.h"
+#include "driver_uart.h"
 
 #define HSI_CLOCK				16000000U
 

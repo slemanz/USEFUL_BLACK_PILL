@@ -1,24 +1,20 @@
 #include "common-defines.h"
 #include "init.h"
-
-// Function prototype
-void delay(volatile uint32_t count);
+#include "ticks.h"
 
 int main(void)
 {
     init_io();
+    init_systick();
+
+    uint64_t start_time = ticks_get();
 
     while (1)
     {
-        GPIO_ToggleOutputPin(LED_EXT_PORT, LED_EXT_PIN);
-        delay(3000000);
+        if((ticks_get() - start_time) == 500)
+        {
+            GPIO_ToggleOutputPin(LED_EXT_PORT, LED_EXT_PIN);
+            start_time = ticks_get();
+        }
     }
 }
-
-void delay(volatile uint32_t count) {
-    while (count-- > 0) {
-        __asm("NOP"); // No operation for delay
-    }
-}
-
-

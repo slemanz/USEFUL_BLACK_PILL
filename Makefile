@@ -40,6 +40,7 @@ DRIVERS		+= Build/driver_uart.o
 #SHARED 		+= Build/cli.o
 
 COMMON 		+= Build/init.o
+COMMON 		+= Build/ticks.o
 
 
 
@@ -61,7 +62,6 @@ Build/%.o: Src/%.S
 
 Build/%.o: Apps/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/$(*).c
-
 
 Build/%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o $(*).c
