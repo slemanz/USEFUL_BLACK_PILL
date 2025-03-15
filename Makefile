@@ -20,6 +20,7 @@ OBJCOPY=arm-none-eabi-objcopy
 INCLUDES+= -I Inc/
 INCLUDES+= -I Drivers/Inc/ 
 INCLUDES+= -I Shared/Inc/ 
+INCLUDES+= -I Common/Inc/ 
 
 
 ############################################
@@ -36,7 +37,9 @@ DRIVERS		+= Build/driver_gpio.o
 DRIVERS		+= Build/driver_uart.o
 #OBJS		+= Build/system.o
 
-SHARED 		+= Build/cli.o
+#SHARED 		+= Build/cli.o
+
+COMMON 		+= Build/init.o
 
 
 
@@ -69,6 +72,9 @@ Build/%.o: Drivers/Src/%.c
 Build/%.o: Shared/Src/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Shared/Src/$(*).c
 
+Build/%.o: Common/Src/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Common/Src/$(*).c
+
 Build/%.o: Apps/blinky/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/blinky/$(*).c
 
@@ -80,7 +86,7 @@ Build/blinky.elf: $(BLINKY) $(OBJS)
 	$(CC) $(APP_LDFLAGS) -o Build/flash.elf $^
 	$(OBJCOPY) -O binary $@ Build/flash.bin
 
-Build/command.elf: $(COMMAND) $(OBJS) $(DRIVERS) $(SHARED)
+Build/command.elf: $(COMMAND) $(OBJS) $(DRIVERS) $(SHARED) $(COMMON)
 	$(CC) $(APP_LDFLAGS) -o $@ $^
 	$(CC) $(APP_LDFLAGS) -o Build/flash.elf $^
 	$(OBJCOPY) -O binary $@ Build/flash.bin
