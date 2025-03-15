@@ -8,8 +8,6 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
-#include "stm32f401.h"
-
 // Function pointer type
 typedef void(*function_t)(void);
 

@@ -1,4 +1,4 @@
-#include "stm32f401.h"
+#include "cli.h"
 
 commandStruct_t commands[] = {
     {"LED_ON", TurnOnLED, "Turn on the LED"},

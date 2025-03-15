@@ -19,7 +19,7 @@ OBJCOPY=arm-none-eabi-objcopy
 
 INCLUDES+= -I Inc/
 INCLUDES+= -I Drivers/Inc/ 
-INCLUDES+= -I Drivers/Inc/ 
+INCLUDES+= -I Shared/Inc/ 
 
 
 ############################################
@@ -32,9 +32,11 @@ OBJS		+= Build/syscalls.o
 OBJS		+= Build/startup.o
 
 DRIVERS		+= Build/driver_gpio.o
+DRIVERS		+= Build/driver_uart.o
 #OBJS		+= Build/driver_systick.o
-#OBJS		+= Build/driver_uart.o
 #OBJS		+= Build/system.o
+
+SHARED 		+= Build/cli.o
 
 
 
@@ -57,11 +59,6 @@ Build/%.o: Src/%.S
 Build/%.o: Apps/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/$(*).c
 
-Build/%.o: Apps/blinky/%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/blinky/$(*).c
-
-Build/%.o: Apps/command/%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/command/$(*).c
 
 Build/%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o $(*).c
@@ -69,15 +66,21 @@ Build/%.o: %.c
 Build/%.o: Drivers/Src/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Drivers/Src/$(*).c
 
+Build/%.o: Shared/Src/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Shared/Src/$(*).c
+
 Build/%.o: Apps/blinky/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/blinky/$(*).c
+
+Build/%.o: Apps/command/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o Build/$(*).o Apps/command/$(*).c
 
 Build/blinky.elf: $(BLINKY) $(OBJS)
 	$(CC) $(APP_LDFLAGS) -o $@ $^
 	$(CC) $(APP_LDFLAGS) -o Build/flash.elf $^
 	$(OBJCOPY) -O binary $@ Build/flash.bin
 
-Build/command.elf: $(COMMAND) $(OBJS) $(DRIVERS)
+Build/command.elf: $(COMMAND) $(OBJS) $(DRIVERS) $(SHARED)
 	$(CC) $(APP_LDFLAGS) -o $@ $^
 	$(CC) $(APP_LDFLAGS) -o Build/flash.elf $^
 	$(OBJCOPY) -O binary $@ Build/flash.bin
