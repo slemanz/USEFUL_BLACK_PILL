@@ -11,3 +11,10 @@ void init_io(void)
     led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_MEDIUM;
     GPIO_Init(&led);
 }
+
+void init_systick(void)
+{
+    systick_set_frequency(SYSTICK_FREQ, CPU_FREQ);
+    systick_counter_enable();
+    systick_interrupt_enable();
+}
