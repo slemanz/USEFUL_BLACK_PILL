@@ -33,6 +33,7 @@ OBJS		+= Build/syscalls.o
 OBJS		+= Build/startup.o
 
 DRIVERS		+= Build/driver_systick.o
+DRIVERS		+= Build/driver_interrupt.o
 DRIVERS		+= Build/driver_gpio.o
 DRIVERS		+= Build/driver_uart.o
 
