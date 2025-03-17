@@ -80,3 +80,13 @@ void uart_write(UART_RegDef_t *pUARTx, uint8_t* pTxBuffer, const uint32_t Len)
 		uart_write_byte(pUARTx, pTxBuffer[i]);
 	}
 }
+
+void UART_InterruptConfig(UART_RegDef_t *pUARTx, uint32_t interrupt, uint8_t EnorDi)
+{
+    if(EnorDi == ENABLE)
+    {
+        pUARTx->CR1 |= (interrupt);
+        return;
+    }
+    pUARTx->CR1 &= ~(interrupt);
+}

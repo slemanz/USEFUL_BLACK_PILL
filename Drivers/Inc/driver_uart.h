@@ -48,12 +48,24 @@ typedef struct{
  */
 
 
-#define UART_CR1_TE                 (3)
-#define UART_CR1_RE                 (2)
-#define UART_CR1_UE                 (13)
+#define UART_CR1_SBK                    (0)
+#define UART_CR1_RWU                    (1)
+#define UART_CR1_RE                     (2)
+#define UART_CR1_TE                     (3)
+#define UART_CR1_IDLEIE                 (4)
+#define UART_CR1_RXNEIE                 (5)
+#define UART_CR1_TCIE                   (6)
+#define UART_CR1_TXEIE                  (7)
+#define UART_CR1_PEIE                   (8)
+#define UART_CR1_PS                     (9)
+#define UART_CR1_PCE                    (10)
+#define UART_CR1_WAKE                   (11)
+#define UART_CR1_M                      (12)
+#define UART_CR1_UE                     (13)
+#define UART_CR1_OVER8                  (15)
 
-#define UART_SR_TXE                 (7)
-#define UART_SR_RXNE                (5)
+#define UART_SR_TXE                     (7)
+#define UART_SR_RXNE                    (5)
 
 /*
  * UART MASK
@@ -70,6 +82,20 @@ typedef struct{
 #define UART_FLAG_TXE               (1 << UART_SR_TXE)
 #define UART_FLAG_RXNE              (1 << UART_SR_RXNE)
 //#define UART_FLAG_TC 			( 1 << UART_SR_TC)
+
+/*
+ * UART Interrupts
+ */
+
+#define UART_INTERRUPT_RXNE         (1 << UART_CR1_RXNEIE)
+
+/*
+ * UART IRQ numbers
+ */
+
+#define IRQ_NO_UART1                37
+#define IRQ_NO_UART2                38
+#define IRQ_NO_UART6                71
 
 
 /********************************************************************************************
@@ -103,7 +129,7 @@ uint8_t uart_read_byte(UART_RegDef_t *pUARTx);
  * Interrupt Configuration
  */
 
-void UART_InterruptConfig(uint8_t interrupt, uint8_t EnorDi);
+void UART_InterruptConfig(UART_RegDef_t *pUARTx, uint32_t interrupt, uint8_t EnorDi);
 
 
 /*

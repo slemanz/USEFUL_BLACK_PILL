@@ -431,6 +431,7 @@ typedef struct
  */
 
 #include "driver_systick.h"
+#include "driver_interrupt.h"
 #include "driver_gpio.h"
 #include "driver_uart.h"
 
