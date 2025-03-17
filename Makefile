@@ -37,11 +37,12 @@ DRIVERS		+= Build/driver_interrupt.o
 DRIVERS		+= Build/driver_gpio.o
 DRIVERS		+= Build/driver_uart.o
 
-#SHARED 		+= Build/cli.o
-SHARED 		+= Build/ring-buffer.o
-
 COMMON 		+= Build/init.o
 COMMON 		+= Build/ticks.o
+COMMON 		+= Build/serial.o
+
+#SHARED 		+= Build/cli.o
+SHARED 		+= Build/ring-buffer.o
 
 
 
