@@ -35,9 +35,9 @@ OBJS		+= Build/startup.o
 DRIVERS		+= Build/driver_systick.o
 DRIVERS		+= Build/driver_gpio.o
 DRIVERS		+= Build/driver_uart.o
-#OBJS		+= Build/system.o
 
 #SHARED 		+= Build/cli.o
+SHARED 		+= Build/ring-buffer.o
 
 COMMON 		+= Build/init.o
 COMMON 		+= Build/ticks.o
