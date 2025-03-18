@@ -40,6 +40,8 @@ void init_serial(void)
     UartHandle.USART_Config.UART_Baud = UART_STD_BAUD_115200;
     UartHandle.USART_Config.UART_Mode = UART_MODE_TXRX;
     UART_Init(&UartHandle);
+    UART_InterruptConfig(UART2, UART_INTERRUPT_RXNE, ENABLE);
+    interrupt_config(IRQ_NO_UART2, ENABLE);
 }
 
 // printf retarget

@@ -2,7 +2,18 @@
 #include "init.h"
 #include "ticks.h"
 
-#include <stdio.h>
+uint8_t ch = 0;
+
+void USART2_IRQHandler (void)
+{
+    const bool overrun_occurred = UART_GetFlagStatus(UART2, UART_FLAG_ORE);
+	const bool received_data = UART_GetFlagStatus(UART2, UART_FLAG_RXNE);
+
+	if(received_data || overrun_occurred)
+	{
+        ch = UART2->DR;
+	}
+}
 
 int main(void)
 {
@@ -11,7 +22,6 @@ int main(void)
     init_serial();
 
     uint64_t start_time = ticks_get();
-    uint64_t start_time2 = ticks_get();
 
     while (1)
     {
@@ -21,10 +31,10 @@ int main(void)
             start_time = ticks_get();
         }
 
-        if((ticks_get() - start_time2) == 2000)
-        {
-            printf("Testando!\n\r");
-            start_time2 = ticks_get();
-        }
+		if(ch != 0)
+		{
+            uart_write(UART2, &ch, 1);
+            ch = 0;
+		}
     }
 }
