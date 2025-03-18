@@ -64,24 +64,35 @@ typedef struct{
 #define UART_CR1_UE                     (13)
 #define UART_CR1_OVER8                  (15)
 
-#define UART_SR_TXE                     (7)
+#define UART_SR_ORE                     (3)
 #define UART_SR_RXNE                    (5)
+#define UART_SR_TC                      (6)
+#define UART_SR_TXE                     (7)
+#define UART_SR_CTS                     (9)
 
 /*
  * UART MASK
  */
 
-#define UART_CR1_TE_MASK            (1 << UART_CR1_TE)
-#define UART_CR1_RE_MASK            (1 << UART_CR1_RE)
-#define UART_CR1_UE_MASK            (1 << UART_CR1_UE)
+#define UART_CR1_TE_MASK                (1 << UART_CR1_TE)
+#define UART_CR1_RE_MASK                (1 << UART_CR1_RE)
+#define UART_CR1_UE_MASK                (1 << UART_CR1_UE)
+
+#define UART_SR_CTS_MASK                (1 << UART_SR_CTS)
+#define UART_SR_TXE_MASK                (1 << UART_SR_TXE)
+#define UART_SR_TC_MASK                 (1 << UART_SR_TC)
+#define UART_SR_RXNE_MASK               (1 << UART_SR_RXNE)
+#define UART_SR_ORE_MASK                (1 << UART_SR_ORE)
 
 /*
  * UART flags
  */
 
-#define UART_FLAG_TXE               (1 << UART_SR_TXE)
-#define UART_FLAG_RXNE              (1 << UART_SR_RXNE)
-//#define UART_FLAG_TC 			( 1 << UART_SR_TC)
+#define UART_FLAG_CTS	                (UART_SR_CTS_MASK)
+#define UART_FLAG_TXE                   (UART_SR_TXE_MASK)
+#define UART_FLAG_TC                 	(UART_SR_TC_MASK)
+#define UART_FLAG_RXNE                  (UART_SR_RXNE_MASK)
+#define UART_FLAG_ORE                 	(UART_SR_ORE_MASK)
 
 /*
  * UART Interrupts
